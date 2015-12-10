@@ -46,6 +46,10 @@ pack (x:xs) = if x == (head xs)
               else [x]:(pack xs)
 
 -- 10) Run-length encoding of a list. Use the result of problem P09 to implement the so-called run-length encoding data compression method. Consecutive duplicates of elements are encoded as lists (N E) where N is the number of duplicates of the element E.
--- encode :: (Eq a) => [a] -> [(Int, a)]
--- encode [] = []
--- encode [x] = [(1, x)]
+encode :: (Eq a) => [a] -> [(Int, a)]
+encode = foldr compress' [] . map encoded
+  where encoded x = (1,x)
+        compress' t [] = [t]
+        compress' t ((n,y):ys)
+          | snd t == y = compress' (n+1,y) ys
+          | otherwise  = t:(compress' (n,y) ys)
