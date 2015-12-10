@@ -36,3 +36,16 @@ compress (x:xs@(y:_))
   | x == y = compress xs
   | otherwise = x:(compress xs)
 compress xs = xs
+
+-- 9) Pack consecutive duplicates of list elements into sublists. If a list contains repeated elements they should be placed in separate sublists.
+pack :: (Eq a) => [a] -> [[a]]
+pack [] = []
+pack [x] = [[x]]
+pack (x:xs) = if x == (head xs)
+              then (x:(head $ pack xs)):(pack $ tail xs)
+              else [x]:(pack xs)
+
+-- 10) Run-length encoding of a list. Use the result of problem P09 to implement the so-called run-length encoding data compression method. Consecutive duplicates of elements are encoded as lists (N E) where N is the number of duplicates of the element E.
+-- encode :: (Eq a) => [a] -> [(Int, a)]
+-- encode [] = []
+-- encode [x] = [(1, x)]
