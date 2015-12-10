@@ -1,4 +1,5 @@
 -- 99 Haskell Problems: https://wiki.haskell.org/99_questions
+import Data.List
 
 -- 1) Find the last element of a list.
 myLast :: [a] -> a
@@ -32,10 +33,7 @@ flatten' (List x) = concatMap flatten' x
 
 -- 8) Eliminate consecutive duplicates of list elements.
 compress :: (Eq a) => [a] -> [a]
-compress (x:xs@(y:_))
-  | x == y = compress xs
-  | otherwise = x:(compress xs)
-compress xs = xs
+compress = map head . group
 
 -- 9) Pack consecutive duplicates of list elements into sublists. If a list contains repeated elements they should be placed in separate sublists.
 pack :: (Eq a) => [a] -> [[a]]
