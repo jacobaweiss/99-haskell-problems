@@ -63,3 +63,14 @@ decodeModified :: (Eq a) => [Numerable a] -> [a]
 decodeModified = concat . map decoded
   where decoded (Single x) = [x]
         decoded (Multiple n x) = replicate n x
+
+-- 13) Run-length encoding of a list (direct solution).
+-- Implement the so-called run-length encoding data compression method directly. I.e. don't explicitly create the sublists containing the duplicates, as in problem 9, but only count them. As in problem P11, simplify the result list by replacing the singleton lists (1 X) by X.
+encodeDirect :: (Eq a) => [a] -> [Numerable a]
+encodeDirect = map convert . (foldr compress [])
+  where convert (1, x) = Single x
+        convert (n, x) = Multiple n x
+        compress x [] = [(1, x)]
+        compress x (y@(a,b):ys)
+          | x == b = (a+1,b):ys
+          | otherwise = (1,x):y:ys
