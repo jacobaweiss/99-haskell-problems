@@ -74,3 +74,11 @@ encodeDirect = map convert . (foldr compress [])
         compress x (y@(a,b):ys)
           | x == b = (a+1,b):ys
           | otherwise = (1,x):y:ys
+
+-- 14) Duplicate the elements of a list.
+dupli :: [a] -> [a]
+dupli = concat . map (replicate 2)
+
+-- 15) Replicate the elements of a list a given number of times.
+repli :: Int -> [a] -> [a]
+repli n = concat . map (replicate n)
