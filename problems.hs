@@ -82,3 +82,33 @@ dupli = concat . map (replicate 2)
 -- 15) Replicate the elements of a list a given number of times.
 repli :: Int -> [a] -> [a]
 repli n = concat . map (replicate n)
+
+-- 16) Drop every N'th element from a list.
+drop' :: [a] -> Int -> [a]
+drop' [] _ = []
+drop' xs n = take (n - 1) xs ++ drop' (drop n xs) n
+
+-- 17) Split a list into two parts; the length of the first part is given.
+-- Do not use any predefined predicates.
+split :: [a] -> Int -> ([a], [a])
+split xs n = (take n xs, drop n xs)
+
+-- 18) Extract a slice from a list.
+-- Given two indices, i and k, the slice is the list containing the elements between the i'th and k'th element of the original list (both limits included). Start counting the elements with 1.
+slice :: [a] -> Int -> Int -> [a]
+slice xs i j = reverse $ drop end $ reverse $ drop start xs
+  where end = length xs - j
+        start = i - 1
+
+-- 19) Rotate a list N places to the left.
+-- Hint: Use the predefined functions length and (++).
+rotate :: [a] -> Int -> [a]
+rotate xs n = regroup $ split xs n
+  where regroup (front, back) = back ++ front
+
+-- 20) Remove the K'th element from a list.
+removeAt :: Int -> [a] -> (a, [a])
+removeAt n xs = (el, front ++ back)
+  where front = take (n - 1) xs
+        back = drop n xs
+        el = head $ drop (n - 1) xs
