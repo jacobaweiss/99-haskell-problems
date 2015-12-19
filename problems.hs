@@ -112,3 +112,12 @@ removeAt n xs = (el, front ++ back)
   where front = take (n - 1) xs
         back = drop n xs
         el = head $ drop (n - 1) xs
+
+-- 21) Insert an element at a given position into a list.
+insertAt :: a -> [a] -> Int -> [a]
+insertAt el xs i = joinWith $ split xs (i-1)
+  where joinWith (f, b) = f ++ el:b
+
+-- 22) Create a list containing all integers within a given range.
+range' :: Int -> Int -> [Int]
+range' x y = [x..y]
